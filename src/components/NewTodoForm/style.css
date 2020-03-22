@@ -1,0 +1,25 @@
+.hide {
+  display: none;
+}
+
+.NewTodoForm{
+  border: 1px solid black;
+  height: 100%;
+}
+
+.bodyInput{
+  height: 300px;
+  width: 100%;
+  font-family: inherit;
+  font-size: 2em;
+  border-bottom: 0;
+}
+
+.titleInput{
+  border-top: 0;
+  height: 75px;
+  width: 75%;
+  margin: 0 auto 0 0;
+  font-family: inherit;
+  font-size: 2em;
+}

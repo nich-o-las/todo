@@ -1,0 +1,45 @@
+.TodoList-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.TodoList-list{
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+}
+
+.TodoList-header{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.TodoList-newBtn{
+  background-color: bisque;
+  font-size: 1.5em;
+  height: 100%;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+}
+
+.TodoList-newBtnBox{
+  width: 25%;
+}
+
+.TodoList-edit{
+  border: 1px solid black;
+  width: 75%;
+}
+
+.TodoList-edit textarea{
+  display: block;
+  margin: auto;
+}
+
+.TodoList-activeNote form{
+  width: 100%;
+  border: 1px solid black;
+}
