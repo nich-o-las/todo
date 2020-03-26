@@ -8,7 +8,6 @@ export default function NewTodoForm(props){
   if(!props.showing){
     formClasses.push('hide');
   }
-
   const handleChange = (evt) => {
     if(evt.target.name === "title"){
       setNewTodo({...newTodo, title: evt.target.value});

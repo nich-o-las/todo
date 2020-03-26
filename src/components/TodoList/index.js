@@ -8,60 +8,74 @@ import { faSave, faTrash } from '@fortawesome/free-solid-svg-icons'
 
 
 export default function TodoList(){
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState({});
   const [active, setActive] = useState({});
   const [editing, setEditing] = useState(false);
 
   useEffect(()=>{
-    let stored = localStorage.getItem('reactTodos');
-    setTodos(JSON.parse(stored));
-    setActive(JSON.parse(stored)[0])
+    const stored = JSON.parse(localStorage.getItem('reactTodos'));
+    if(stored){
+      setTodos({...stored});
+      //setActive(stored[Object.keys(stored)[0]]);
+    }
   }, []);
 
   useEffect(()=>{
-    let updated = JSON.stringify(todos);
-    localStorage.setItem('reactTodos', updated);
-    setActive(JSON.parse(updated)[0])
+    if(todos){
+      const updated = JSON.stringify(todos);
+      localStorage.setItem('reactTodos', updated);
+    }
+    if(!todos.length){
+      setEditing(false);
+    }
   }, [todos]);
 
   const createTodo = (title, body) => {
-    setTodos([...todos, {body, title, id: uuidv4(), completed: false}]);
-    setEditing(false)
+    const newId = uuidv4();
+    setTodos({...todos, [newId]: {body, title, id: newId, completed: false}});
+    setEditing(false);
   }
+
   const deleteTodo = (id) => {
-    setTodos(todos.filter(i => i.id !== id))
+    const updated = {...todos};
+    delete updated[id];
+    setTodos(updated);
   }
+
   const changeTodo = (title, body, id) => {
-    let newTodos = todos;
-    for(let i = 0; i < newTodos.length; i++){
-      if(newTodos[i].id === id) {
-        newTodos[i].text = title;
-        newTodos[i].body = body;
-      }
-    }
-    setTodos([...newTodos]);
+    const updated = {...todos};
+    updated[id] = {...active, title, body}
+    setTodos(updated);
   }
+
   const completeTodo = (id) => {
-    let newTodos = todos;
-    for(let i = 0; i < newTodos.length; i++){
-      if(newTodos[i].id === id) newTodos[i].completed = !newTodos[i].completed;
-    }
-    setTodos([...newTodos]);
+    const updated = {...todos}
+    updated[id] = {...updated.id, completed: true};
+    setTodos(updated);
   }
+  
   const displayList = () => {
-    return (
-      todos.map( (item) => {
-        return (
-                  <Todo 
-                    key={item.id} 
-                    unique={item.id}
-                    completed={item.completed}
-                    removeTodo={deleteTodo}
-                    title={item.title}
-                    onClick={changeActive}
-                  />)
-      })
-    )
+    if(todos){
+      return (
+        Object.keys(todos).map((key) => {
+          return (
+                    <Todo 
+                      key={todos[key].id} 
+                      unique={todos[key].id}
+                      completed={todos[key].completed}
+                      removeTodo={deleteTodo}
+                      title={todos[key].title}
+                      onClick={changeActive}
+                    />)
+        })
+      )
+    } else {
+      return(
+        <div>
+          No Notes!
+        </div>
+      )
+    }
   }
 
   const displayActive = () => {
@@ -84,13 +98,16 @@ export default function TodoList(){
               name='body'
               onChange={handleChange}
             />
-            <span onClick={handleClick} data-type="delete">
+            <span 
+              className="deleteActive" 
+              onClick={handleClick} 
+              id={`delete-active-${active.id}`}
+            >
               <FontAwesomeIcon icon={faTrash} />
             </span>
             <button onClick={handleClick}>
               complete
             </button>
-            <FontAwesomeIcon onClick={handleSubmit} icon={faSave} />
           </form>
         </div>
       )
@@ -98,8 +115,7 @@ export default function TodoList(){
   }
 
   const changeActive = (id) => {
-    const newActive = todos.filter(i => i.id === id);
-    setActive(newActive[0]);
+    setActive(todos[id]);
     setEditing(true);
   }
 
@@ -111,9 +127,8 @@ export default function TodoList(){
   const handleClick = (evt) => {
     if(evt.target.innerText === "complete"){
       completeTodo(active.id);
-    } else if(evt.target.innerText === "edit"){
-      changeTodo(active.title, active.body, active.id);
-    } else if(evt.target.dataset.type === "delete"){
+      console.log('complete')
+    } else if(evt.target.id ===  `delete-active-${active.id}`){
       console.log('delete')
       deleteTodo(active.id);
     }
@@ -121,10 +136,12 @@ export default function TodoList(){
 
   const handleChange = (evt) => {
     if(evt.target.name === "body"){
-      setActive({...active, body: evt.target.value})}
-    else{
+      setActive({...active, body: evt.target.value});
+      setTodos({...todos, [active.id] : {...active, body: evt.target.value}})
+    } else {
       setActive({...active, title: evt.target.value});
-    };
+      setTodos({...todos, [active.id] : {...active, title: evt.target.value}})
+    }
   }
 
   const newBtn = () => {
@@ -143,10 +160,8 @@ export default function TodoList(){
   return(
     <div className="TodoList">
       <div className="TodoList-header">
-        <div className="TodoList-newBtnBox">
-          {newBtn()}
-        </div>
-        <h1>Todo List</h1>
+        <h1>Note Taker</h1>
+        {newBtn()}
       </div>
       <div className="TodoList-container">
         <div className="TodoList-list">

@@ -1,3 +1,9 @@
 .Todo{
+  padding: 1em;
   border: 1px solid black;
+}
+
+.Todo-delete{
+  padding: .5em;
+  cursor: pointer;
 }

@@ -17,12 +17,12 @@
 }
 
 .TodoList-newBtn{
-  background-color: bisque;
-  font-size: 1.5em;
+  border: 1px solid blue;
   height: 100%;
   text-align: center;
-  padding: 0;
+  padding: 1em;
   margin: 0;
+  overflow: hidden;
 }
 
 .TodoList-newBtnBox{
@@ -37,6 +37,14 @@
 .TodoList-edit textarea{
   display: block;
   margin: auto;
+}
+
+.deleteActive{
+  padding: 1em;
+  width: 20%;
+  cursor: pointer;
+  overflow: hidden;
+
 }
 
 .TodoList-activeNote form{
