@@ -1,9 +1,28 @@
 .Todo{
-  padding: 1em;
-  border: 1px solid black;
+  padding: .5em;
+  border-bottom: 1px solid rgba(0,0,0,0.7);
+  min-width: 5em;
+  color: #edf5e1;
+  display: flex;
+  justify-content: space-between;
 }
 
+.Todo-title{
+  width: 50%;
+}
 .Todo-delete{
   padding: .5em;
   cursor: pointer;
+  width: 50%;
+  text-align: right;
+  border: none;
+  background: none;
+  font-size: 1.25em;
+}
+
+@media screen and (max-width: 600px) {
+  .Todo{
+    border-bottom: none;
+    border-right: 1px solid rgba(0,0,0,0.7);
+  }
 }

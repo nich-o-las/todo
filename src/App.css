@@ -4,3 +4,14 @@
   font-size: 16px;
 }
 
+.alert-text{
+  color:#db675c;
+}
+
+.primary{
+  background-color:#083a6c;
+}
+
+.secondary{
+  background-color: #5cda94;
+}

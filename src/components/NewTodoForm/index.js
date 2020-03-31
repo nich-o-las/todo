@@ -26,15 +26,18 @@ export default function NewTodoForm(props){
     <div className={["NewTodoForm", ...formClasses].join(' ')} >
       <form
         onSubmit={handleSubmit}
-      >
-        <input
-          className="inputField titleInput"
-          placeholder="Title"
-          name="title"
-          value={newTodo.title}
-          onChange={handleChange}
-          id="NewTodoInput"
-        />
+      > 
+        <div className="NewTodoForm-row">
+          <input
+            className="inputField titleInput"
+            placeholder="Title"
+            name="title"
+            value={newTodo.title}
+            onChange={handleChange}
+            id="NewTodoInput"
+          />
+          <button className="NewTodoForm-save"><i className="fa fa-save"></i></button>
+        </div>
         <textarea
           className="inputField bodyInput"
           placeholder="body"
@@ -43,7 +46,6 @@ export default function NewTodoForm(props){
           onChange={handleChange}
           id="NewTodoInput"
         />
-        <button>Submit</button>
       </form>
     </div>
   )

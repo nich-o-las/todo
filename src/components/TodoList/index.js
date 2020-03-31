@@ -3,8 +3,6 @@ import './style.css';
 import NewTodoForm from '../NewTodoForm';
 import Todo from '../Todo';
 import {v4 as uuidv4} from 'uuid';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSave, faTrash } from '@fortawesome/free-solid-svg-icons'
 
 
 export default function TodoList(){
@@ -25,9 +23,9 @@ export default function TodoList(){
       const updated = JSON.stringify(todos);
       localStorage.setItem('reactTodos', updated);
     }
-    if(!todos.length){
-      setEditing(false);
-    }
+    // if(!todos.length){
+    //   setEditing(false);
+    // }
   }, [todos]);
 
   const createTodo = (title, body) => {
@@ -39,6 +37,13 @@ export default function TodoList(){
   const deleteTodo = (id) => {
     const updated = {...todos};
     delete updated[id];
+    if(id === active.id){
+      if(Object.keys(updated).length){
+        setActive(updated[Object.keys(updated)[0]]);
+      } else {
+        setEditing(false);
+      }
+    }
     setTodos(updated);
   }
 
@@ -48,11 +53,6 @@ export default function TodoList(){
     setTodos(updated);
   }
 
-  const completeTodo = (id) => {
-    const updated = {...todos}
-    updated[id] = {...updated.id, completed: true};
-    setTodos(updated);
-  }
   
   const displayList = () => {
     if(todos){
@@ -62,7 +62,6 @@ export default function TodoList(){
                     <Todo 
                       key={todos[key].id} 
                       unique={todos[key].id}
-                      completed={todos[key].completed}
                       removeTodo={deleteTodo}
                       title={todos[key].title}
                       onClick={changeActive}
@@ -71,7 +70,7 @@ export default function TodoList(){
       )
     } else {
       return(
-        <div>
+        <div className="TodoList-noNotes alert-text">
           No Notes!
         </div>
       )
@@ -85,29 +84,27 @@ export default function TodoList(){
           <form
             onSubmit={handleSubmit}
           >
-            <input 
-              className="titleInput"
-              type="text" 
-              value={active.title} 
-              name="title"
-              onChange={handleChange}
-            />
+            <div className="TodoList-activeNote-row">
+              <input 
+                className="titleInput inputField"
+                type="text" 
+                value={active.title} 
+                name="title"
+                onChange={handleChange}
+              />
+              <div
+                className="deleteActive deleteActive-container" 
+                onClick={handleClick}
+              >
+                <i className="fa fa-trash-alt deleteActive alert-text"></i>
+              </div>
+            </div>
             <textarea 
-              className="bodyInput"
+              className="bodyInput inputField"
               value={active.body} 
-              name='body'
+              name="body"
               onChange={handleChange}
             />
-            <span 
-              className="deleteActive" 
-              onClick={handleClick} 
-              id={`delete-active-${active.id}`}
-            >
-              <FontAwesomeIcon icon={faTrash} />
-            </span>
-            <button onClick={handleClick}>
-              complete
-            </button>
           </form>
         </div>
       )
@@ -125,10 +122,7 @@ export default function TodoList(){
   }
 
   const handleClick = (evt) => {
-    if(evt.target.innerText === "complete"){
-      completeTodo(active.id);
-      console.log('complete')
-    } else if(evt.target.id ===  `delete-active-${active.id}`){
+    if(evt.target.classList.contains('deleteActive')){
       console.log('delete')
       deleteTodo(active.id);
     }
@@ -147,12 +141,12 @@ export default function TodoList(){
   const newBtn = () => {
     if(editing){
       return(
-        <h3
+        <div
           className="TodoList-newBtn"
           onClick={()=>setEditing(false)}
         >
-          new item
-        </h3>
+          <i class="fa fa-plus-circle"></i>
+        </div>
       )
     }
   }
@@ -160,10 +154,10 @@ export default function TodoList(){
   return(
     <div className="TodoList">
       <div className="TodoList-header">
-        <h1>Note Taker</h1>
+        <h1 className="TodoList-logo">Note Taker</h1>
         {newBtn()}
       </div>
-      <div className="TodoList-container">
+      <div className="TodoList-container primary">
         <div className="TodoList-list">
           {displayList()}
         </div>
