@@ -46,6 +46,12 @@
   font-size: 2em;
 }
 
+.TodoList-logo{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
 .TodoList-edit{
   width: 75%;
   overflow: hidden;
