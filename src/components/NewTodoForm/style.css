@@ -13,6 +13,7 @@
   width: 25%;
   font-size: 2em;
   color: #5cda95;
+  cursor: pointer;
 }
 
 .NewTodoForm-row{

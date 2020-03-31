@@ -2,8 +2,6 @@ import React from 'react';
 import './style.css';
 
 export default function Todo(props){
-  const titleStyle = {textDecoration: "none"};
-  if(props.completed) titleStyle.textDecoration = "line-through";
   const handleClick = (evt) => {
     if(evt.target.classList.contains('Todo-delete')) {
       console.log('clicked button')
@@ -14,16 +12,16 @@ export default function Todo(props){
   }
   return (
     <div className="Todo" onClick={handleClick}>
-      <p data-type="Todo-title" style={titleStyle}>
-          {props.title}
+      <p className="Todo-title">
+          {(props.title.length > 8 ? 
+            props.title.substring(0,8) + '...' : 
+            props.title)}
       </p>
-      <button
-        onClick={handleClick} 
-        className="Todo-delete"
+      <i 
+        className="fa fa-trash-alt Todo-delete alert-text"
         id={`delete-${props.unique}`}
-      >
-        <i className="fa fa-trash-alt Todo-delete alert-text"></i>
-      </button>
+        onClick={handleClick} 
+      ></i>
     </div>
   )
 }

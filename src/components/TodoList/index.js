@@ -145,7 +145,8 @@ export default function TodoList(){
           className="TodoList-newBtn"
           onClick={()=>setEditing(false)}
         >
-          <i class="fa fa-plus-circle"></i>
+          <i className="fa fa-pen"></i>
+          <p>new note</p>
         </div>
       )
     }
