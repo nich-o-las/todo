@@ -1,10 +1,12 @@
 .TodoList{
   width: 100%;
   max-width: 1200px;
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   justify-self: center;
+  padding-bottom: 5%;
 }
 
 .TodoList-noNotes{
@@ -15,7 +17,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  height: 90%;
+  height: 85%;
 }
 
 .TodoList-list{
@@ -25,7 +27,7 @@
   width: 25%;
   max-height: 76vh;
   overflow-x: hidden;
-  padding: .25em;
+  padding: .25em,.25em, .25em, 0;
 }
 
 .TodoList-header{
@@ -33,10 +35,11 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-end;
-  padding-right: 10em;
+  padding: 0 .5em;
   height: 10%;
-  width: 100%;
-  color: rgba(0,0,0,0.8)
+  color: rgba(0,0,0,0.8);
+  border-left: 1px solid rgba(0,0,0,0.7);
+  border-right: 1px solid rgba(0,0,0,0.7);
 }
 
 .TodoList-newBtn{
@@ -47,6 +50,7 @@
   flex-direction: row-reverse;
   align-items: center;
   cursor: pointer;
+  padding: .5em;
 }
 
 .TodoList-newBtn p{
@@ -86,7 +90,7 @@
 
 @media (max-width: 600px) {
   .TodoList{
-    overflow: hidden;
+    padding-bottom: 0;
   }
   .TodoList-header{
     height: 8vh;

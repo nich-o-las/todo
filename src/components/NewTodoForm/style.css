@@ -23,7 +23,7 @@
 }
 
 .bodyInput{
-  height: 300px;
+  height: 600px;
   width: 100%;
   font-family: inherit;
   font-size: 1em;
@@ -46,9 +46,16 @@
 .inputField{
   background-color: #e8f1df;;
   resize: none;
-  color: rgba(0,0,0,0.9)
+  color: rgba(0,0,0,0.9);
+  padding: .5em;
 }
 
 .titleInput:focus{
   outline: none;
+}
+
+@media (max-width:600px){
+  .bodyInput{
+    height: 400px;
+  }
 }

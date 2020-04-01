@@ -4,6 +4,7 @@
   font-size: 16px;
   display: flex;
   justify-content: space-around;
+  min-height: 100vh;
 }
 
 .alert-text{
